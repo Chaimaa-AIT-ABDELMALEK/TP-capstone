@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        System.out.println(" APPLICATION DE RÉSERVATION DE SALLES ");
+        System.out.println(" APPLICATION DE RESERVATION DE SALLES ");
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("gestion-reservations");
 
