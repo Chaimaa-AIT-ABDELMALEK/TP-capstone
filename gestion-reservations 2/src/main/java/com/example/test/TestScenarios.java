@@ -84,8 +84,6 @@ public class TestScenarios {
 
     private void testRechercheMultiCriteres() {
         System.out.println("\n=== TEST 2: RECHERCHE MULTI-CRITÈRES ===");
-
-        // Test 1: Recherche par capacité et équipement
         Map<String, Object> criteres1 = new HashMap<>();
         criteres1.put("capaciteMin", 30);
         criteres1.put("equipement", 1L); // ID de l'équipement "Écran interactif"
@@ -98,8 +96,6 @@ public class TestScenarios {
             System.out.println("- " + salle.getNom() + " (Capacité: " + salle.getCapacite() + ")");
             System.out.println("  Équipements: " + salle.getEquipements().size() + " équipement(s)");
         }
-
-        // Test 2: Recherche par bâtiment et étage
         Map<String, Object> criteres2 = new HashMap<>();
         criteres2.put("batiment", "Bâtiment C");
         criteres2.put("etage", 2);
@@ -130,9 +126,7 @@ public class TestScenarios {
     private void testPagination() {
         System.out.println("\n=== TEST 3: PAGINATION ===");
 
-        int pageSize = 5; // Nombre d'éléments par page
-
-        // Test de pagination sur les salles
+        int pageSize = 5; 
         System.out.println("Pagination des salles (5 par page):");
 
         int totalPages = salleService.getTotalPages(pageSize);
@@ -167,8 +161,6 @@ public class TestScenarios {
 
     private void testOptimisticLocking() {
         System.out.println("\n=== TEST 4: OPTIMISTIC LOCKING ===");
-
-        // Récupérer une réservation existante
         EntityManager em = emf.createEntityManager();
         Reservation reservation = null;
 
@@ -205,7 +197,6 @@ public class TestScenarios {
                     Reservation r1 = em1.find(Reservation.class, reservationId);
                     System.out.println("Thread 1: Réservation récupérée, version = " + r1.getVersion());
 
-                    // Simuler un traitement long
                     Thread.sleep(1000);
 
                     r1.setMotif("Motif modifié par Thread 1");
@@ -228,13 +219,10 @@ public class TestScenarios {
                 e.printStackTrace();
             }
         });
-
-        // Deuxième thread: modification des dates
         executor.submit(() -> {
             try {
                 latch.await();
 
-                // Petit délai pour s'assurer que le Thread 1 commence en premier
                 Thread.sleep(100);
 
                 EntityManager em2 = emf.createEntityManager();
