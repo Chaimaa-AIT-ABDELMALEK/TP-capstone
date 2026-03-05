@@ -44,8 +44,6 @@ public class TestScenarios {
 
     private void testRechercheDisponibilite() {
         System.out.println("\n=== TEST 1: RECHERCHE DE DISPONIBILITÉ ===");
-
-        // Test 1: Recherche de salles disponibles pour demain matin
         LocalDateTime demainMatin = LocalDateTime.now().plusDays(1).withHour(9).withMinute(0);
         LocalDateTime demainMidi = demainMatin.plusHours(3);
 
@@ -61,8 +59,6 @@ public class TestScenarios {
             System.out.println("... et " + (sallesDisponibles.size() - 5) + " autres salles");
         }
 
-        // Test 2: Recherche de salles disponibles pour un créneau déjà réservé
-        // Récupérer une réservation existante
         EntityManager em = emf.createEntityManager();
         try {
             Reservation reservation = em.createQuery("SELECT r FROM Reservation r WHERE r.statut = :statut", Reservation.class)
@@ -115,8 +111,6 @@ public class TestScenarios {
         for (Salle salle : resultat2) {
             System.out.println("- " + salle.getNom() + " (Étage: " + salle.getEtage() + ")");
         }
-
-        // Test 3: Recherche combinée complexe
         Map<String, Object> criteres3 = new HashMap<>();
         criteres3.put("capaciteMin", 20);
         criteres3.put("capaciteMax", 50);
@@ -154,8 +148,6 @@ public class TestScenarios {
                         ", Bâtiment: " + salle.getBatiment() + ")");
             }
         }
-
-        // Test avec PaginationResult
         System.out.println("\nTest avec PaginationResult:");
 
         long totalItems = salleService.countRooms();
@@ -200,12 +192,8 @@ public class TestScenarios {
         }
 
         final Long reservationId = reservation.getId();
-
-        // Simuler deux utilisateurs modifiant la même réservation simultanément
         CountDownLatch latch = new CountDownLatch(1);
         ExecutorService executor = Executors.newFixedThreadPool(2);
-
-        // Premier thread: modification du motif
         executor.submit(() -> {
             try {
                 latch.await();
@@ -276,11 +264,8 @@ public class TestScenarios {
                 e.printStackTrace();
             }
         });
-
-        // Démarrer les threads simultanément
         latch.countDown();
 
-        // Attendre la fin des threads
         executor.shutdown();
         try {
             executor.awaitTermination(10, TimeUnit.SECONDS);
@@ -288,7 +273,6 @@ public class TestScenarios {
             e.printStackTrace();
         }
 
-        // Vérifier l'état final de la réservation
         em = emf.createEntityManager();
         try {
             Reservation finalReservation = em.find(Reservation.class, reservationId);
@@ -305,13 +289,8 @@ public class TestScenarios {
     private void testCachePerformance() {
         System.out.println("\n=== TEST 5: PERFORMANCE DU CACHE ===");
 
-        // Test 1: Accès répété à la même entité sans cache
         System.out.println("\nTest d'accès répété sans cache:");
-
-        // Désactiver le cache
         emf.getCache().evictAll();
-
-        // Mesurer le temps d'accès sans cache
         long startTime = System.currentTimeMillis();
 
         for (int i = 0; i < 100; i++) {
@@ -328,11 +307,7 @@ public class TestScenarios {
 
         long endTime = System.currentTimeMillis();
         System.out.println("Temps d'exécution sans cache: " + (endTime - startTime) + "ms");
-
-        // Test 2: Accès répété à la même entité avec cache
         System.out.println("\nTest d'accès répété avec cache:");
-
-        // Mesurer le temps d'accès avec cache
         startTime = System.currentTimeMillis();
 
         for (int i = 0; i < 100; i++) {
@@ -349,14 +324,8 @@ public class TestScenarios {
 
         endTime = System.currentTimeMillis();
         System.out.println("Temps d'exécution avec cache: " + (endTime - startTime) + "ms");
-
-        // Test 3: Performance des requêtes avec cache de requête
         System.out.println("\nTest de performance des requêtes avec cache:");
-
-        // Désactiver le cache de requête
         emf.getCache().evictAll();
-
-        // Mesurer le temps sans cache de requête
         startTime = System.currentTimeMillis();
 
         for (int i = 0; i < 20; i++) {
@@ -374,8 +343,6 @@ public class TestScenarios {
 
         endTime = System.currentTimeMillis();
         System.out.println("Temps d'exécution des requêtes sans cache: " + (endTime - startTime) + "ms");
-
-        // Mesurer le temps avec cache de requête
         startTime = System.currentTimeMillis();
 
         for (int i = 0; i < 20; i++) {
