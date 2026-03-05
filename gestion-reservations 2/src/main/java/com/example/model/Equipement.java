@@ -19,7 +19,7 @@ public class Equipement {
     @Column(nullable = false)
     private String nom;
 
-    @Size(max = 500, message = "La description ne peut pas dépasser 500 caractères")
+    @Size(max = 500, message = "La description ne peut pas depasser 500 caractères")
     @Column(length = 500)
     private String description;
 
