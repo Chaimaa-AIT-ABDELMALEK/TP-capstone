@@ -58,8 +58,6 @@ public class Salle {
         this.nom = nom;
         this.capacite = capacite;
     }
-
-    // ---- Méthodes utilitaires ----
     public void addReservation(Reservation r) {
         reservations.add(r);
         r.setSalle(this);
@@ -79,8 +77,6 @@ public class Salle {
         equipements.remove(e);
         e.getSalles().remove(this);
     }
-
-    // ---- Getters / Setters ----
     public Long getId() { return id; }
 
     public String getNom() { return nom; }
