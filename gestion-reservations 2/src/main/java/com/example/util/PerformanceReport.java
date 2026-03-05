@@ -30,7 +30,6 @@ public class PerformanceReport {
 
         resetStatistics();
 
-        // Test 1: Recherche de salles disponibles
         testPerformance("Recherche de salles disponibles", () -> {
             EntityManager em = emf.createEntityManager();
             try {
@@ -50,7 +49,6 @@ public class PerformanceReport {
             }
         });
 
-        // Test 2: Recherche multi-critères
         testPerformance("Recherche multi-critères", () -> {
             EntityManager em = emf.createEntityManager();
             try {
@@ -67,7 +65,6 @@ public class PerformanceReport {
             }
         });
 
-        // Test 3: Pagination
         testPerformance("Pagination", () -> {
             EntityManager em = emf.createEntityManager();
             try {
@@ -80,7 +77,6 @@ public class PerformanceReport {
             }
         });
 
-        // Test 4: Accès répété avec cache
         testPerformance("Accès répété avec cache", () -> {
             Salle result = null;
             for (int i = 0; i < 100; i++) {
@@ -93,8 +89,6 @@ public class PerformanceReport {
             }
             return result;
         });
-
-        // Test 5: Requête avec JOIN FETCH
         testPerformance("Requête avec JOIN FETCH", () -> {
             EntityManager em = emf.createEntityManager();
             try {
