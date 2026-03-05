@@ -26,8 +26,6 @@ public class ReservationServiceImpl implements ReservationService {
         if (start == null || end == null || !end.isAfter(start)) {
             throw new IllegalArgumentException("Intervalle invalide (dateFin doit être après dateDebut)");
         }
-
-        // Vérifier disponibilité
         if (!reservationRepository.findBySalleAndPeriod(salleId, start, end).isEmpty()) {
             throw new IllegalStateException("Salle non disponible sur ce créneau");
         }
@@ -44,8 +42,6 @@ public class ReservationServiceImpl implements ReservationService {
 
             Reservation r = new Reservation(start, end, motif);
             r.setStatut(StatutReservation.CONFIRMEE);
-
-            // relations
             r.setUtilisateur(u);
             r.setSalle(s);
 
