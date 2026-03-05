@@ -44,8 +44,6 @@ public class Utilisateur {
         this.email = email;
     }
 
-
-    // Méthodes utilitaires (important)
     public void addReservation(Reservation r) {
         reservations.add(r);
         r.setUtilisateur(this);
@@ -55,8 +53,6 @@ public class Utilisateur {
         reservations.remove(r);
         r.setUtilisateur(null);
     }
-
-    // Getters & Setters
     public Long getId() { return id; }
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
