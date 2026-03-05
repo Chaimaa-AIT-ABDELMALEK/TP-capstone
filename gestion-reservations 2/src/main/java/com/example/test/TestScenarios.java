@@ -86,7 +86,7 @@ public class TestScenarios {
         System.out.println("\n=== TEST 2: RECHERCHE MULTI-CRITÈRES ===");
         Map<String, Object> criteres1 = new HashMap<>();
         criteres1.put("capaciteMin", 30);
-        criteres1.put("equipement", 1L); // ID de l'équipement "Écran interactif"
+        criteres1.put("equipement", 1L); 
 
         System.out.println("Recherche de salles avec capacité >= 30 et équipées d'un écran interactif");
         List<Salle> resultat1 = salleService.searchRooms(criteres1);
@@ -111,7 +111,7 @@ public class TestScenarios {
         criteres3.put("capaciteMin", 20);
         criteres3.put("capaciteMax", 50);
         criteres3.put("batiment", "Bâtiment B");
-        criteres3.put("equipement", 6L); // ID de l'équipement "Ordinateur fixe"
+        criteres3.put("equipement", 6L); 
 
         System.out.println("\nRecherche complexe: capacité entre 20 et 50, Bâtiment B, avec ordinateur fixe");
         List<Salle> resultat3 = salleService.searchRooms(criteres3);
@@ -179,7 +179,7 @@ public class TestScenarios {
         }
 
         if (reservation == null) {
-            System.out.println("Aucune réservation trouvée pour le test d'optimistic locking");
+            System.out.println("Aucune reservation trouvee pour le test d'optimistic locking");
             return;
         }
 
@@ -336,7 +336,7 @@ public class TestScenarios {
         for (int i = 0; i < 20; i++) {
             EntityManager em = emf.createEntityManager();
             try {
-                // Exécuter une requête avec cache
+            
                 List<Salle> salles = em.createQuery(
                                 "SELECT s FROM Salle s WHERE s.capacite >= :capacite", Salle.class)
                         .setParameter("capacite", 30)
