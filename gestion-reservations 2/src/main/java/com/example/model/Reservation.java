@@ -51,7 +51,6 @@ public class Reservation {
         this.motif = motif;
     }
 
-    // Getters et Setters
     public Long getId() {
         return id;
     }
